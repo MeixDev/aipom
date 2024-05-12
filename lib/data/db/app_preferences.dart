@@ -33,17 +33,20 @@ class AppSharedPrefs {
 
   set projectHistory(List<String> history) => updateProjectHistory(history);
   Future<void> updateProjectHistory(List<String> history) async {
-    if (history.sublist(0, history.length).any((e) => e == history.last)) {
-      final index = history.firstWhere((e) => e == history.last);
-      history.removeAt(history.indexOf(index));
-      final value = history.removeLast();
-      history.insert(0, value);
+    if (history.length > 1) {
+      if (history.sublist(0, history.length).any((e) => e == history.last)) {
+        final index = history.firstWhere((e) => e == history.last);
+        history.removeAt(history.indexOf(index));
+        final value = history.removeLast();
+        history.insert(0, value);
+      }
     }
     while (history.length > 3) {
       history.removeLast();
     }
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setStringList(_projectHistoryKey, history);
+      return;
     }
     throw Exception('AppSharedPrefs must be initialized first. '
         'Please call AppSharedPrefs.ensureInitialized before.');

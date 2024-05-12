@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:aipom/providers/theme_provider.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:system_theme/system_theme.dart';
+// import 'package:system_theme/system_theme.dart';
 
 class ThemeSharedPrefs {
   factory ThemeSharedPrefs() {
@@ -41,6 +41,7 @@ class ThemeSharedPrefs {
   Future<void> updateThemeMode(ThemeMode mode) async {
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setInt(_themeKey, mode.index);
+      return;
     }
     throw Exception('ThemeSharedPrefs must be initialized first. '
         'Please call ThemeSharedPrefs.ensureInitialized before.');
@@ -52,24 +53,25 @@ class ThemeSharedPrefs {
 
   static const _accentColorKey = 'accentColor';
   AccentColor get color {
-    if (_prefs case final SharedPreferences prefs) {
-      final color = prefs.getString(_accentColorKey);
-      if (color == null) return systemAccentColor;
-      // ignore: avoid_as
-      final dataColor = json.decode(color) as Map<String, int>;
-      final colorSwatch = AccentColor.swatch({
-        'darkest': Color(dataColor["darkest"] ?? 0xFF000000),
-        'darker': Color(dataColor["darker"] ?? 0xFF000000),
-        'dark': Color(dataColor["dark"] ?? 0xFF000000),
-        'normal': Color(dataColor["normal"] ?? 0xFF000000),
-        'light': Color(dataColor["light"] ?? 0xFF000000),
-        'lighter': Color(dataColor["lighter"] ?? 0xFF000000),
-        'lightest': Color(dataColor["lightest"] ?? 0xFF000000),
-      });
-      return colorSwatch;
-    }
-    throw Exception('ThemeSharedPrefs must be initialized first. '
-        'Please call ThemeSharedPrefs.ensureInitialized before.');
+    return Colors.purple;
+    // if (_prefs case final SharedPreferences prefs) {
+    //   final color = prefs.getString(_accentColorKey);
+    //   if (color == null) return systemAccentColor;
+    //   // ignore: avoid_as
+    //   final dataColor = json.decode(color) as Map<String, int>;
+    //   final colorSwatch = AccentColor.swatch({
+    //     'darkest': Color(dataColor["darkest"] ?? 0xFF000000),
+    //     'darker': Color(dataColor["darker"] ?? 0xFF000000),
+    //     'dark': Color(dataColor["dark"] ?? 0xFF000000),
+    //     'normal': Color(dataColor["normal"] ?? 0xFF000000),
+    //     'light': Color(dataColor["light"] ?? 0xFF000000),
+    //     'lighter': Color(dataColor["lighter"] ?? 0xFF000000),
+    //     'lightest': Color(dataColor["lightest"] ?? 0xFF000000),
+    //   });
+    //   return colorSwatch;
+    // }
+    // throw Exception('ThemeSharedPrefs must be initialized first. '
+    //     'Please call ThemeSharedPrefs.ensureInitialized before.');
   }
 
   set color(AccentColor color) => updateAccentColor(color);
@@ -85,6 +87,7 @@ class ThemeSharedPrefs {
     };
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setString(_accentColorKey, jsonEncode(colorSwatch));
+      return;
     }
     throw Exception('ThemeSharedPrefs must be initialized first. '
         'Please call ThemeSharedPrefs.ensureInitialized before.');
@@ -109,6 +112,7 @@ class ThemeSharedPrefs {
   Future<void> updatePaneDisplayMode(PaneDisplayMode mode) async {
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setInt(_paneDisplayModeKey, mode.index);
+      return;
     }
     throw Exception('ThemeSharedPrefs must be initialized first. '
         'Please call ThemeSharedPrefs.ensureInitialized before.');
@@ -136,6 +140,7 @@ class ThemeSharedPrefs {
   ) async {
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setInt(_navigationIndicatorsKey, indicators.index);
+      return;
     }
     throw Exception('ThemeSharedPrefs must be initialized first. '
         'Please call ThemeSharedPrefs.ensureInitialized before.');
@@ -160,6 +165,7 @@ class ThemeSharedPrefs {
   Future<void> updateTextDirection(TextDirection direction) async {
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setInt(_textDirectionKey, direction.index);
+      return;
     }
     throw Exception('ThemeSharedPrefs must be initialized first. '
         'Please call ThemeSharedPrefs.ensureInitialized before.');
@@ -184,6 +190,7 @@ class ThemeSharedPrefs {
   Future<void> updateLocale(Locale locale) async {
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setString(_localeKey, locale.languageCode);
+      return;
     }
     throw Exception('ThemeSharedPrefs must be initialized first. '
         'Please call ThemeSharedPrefs.ensureInitialized before.');
@@ -208,6 +215,7 @@ class ThemeSharedPrefs {
   Future<void> updateWindowEffect(WindowEffect effect) async {
     if (_prefs case final SharedPreferences prefs) {
       await prefs.setInt(_windowEffectKey, effect.index);
+      return;
     }
     throw Exception('ThemeSharedPrefs must be initialized first. '
         'Please call ThemeSharedPrefs.ensureInitialized before.');
@@ -215,18 +223,18 @@ class ThemeSharedPrefs {
 }
 
 AccentColor get systemAccentColor {
-  if ((defaultTargetPlatform == TargetPlatform.windows ||
-          defaultTargetPlatform == TargetPlatform.android) &&
-      !kIsWeb) {
-    return AccentColor.swatch({
-      'darkest': SystemTheme.accentColor.darkest,
-      'darker': SystemTheme.accentColor.darker,
-      'dark': SystemTheme.accentColor.dark,
-      'normal': SystemTheme.accentColor.accent,
-      'light': SystemTheme.accentColor.light,
-      'lighter': SystemTheme.accentColor.lighter,
-      'lightest': SystemTheme.accentColor.lightest,
-    });
-  }
+  // if ((defaultTargetPlatform == TargetPlatform.windows ||
+  //         defaultTargetPlatform == TargetPlatform.android) &&
+  //     !kIsWeb) {
+  //   return AccentColor.swatch({
+  //     'darkest': SystemTheme.accentColor.darkest,
+  //     'darker': SystemTheme.accentColor.darker,
+  //     'dark': SystemTheme.accentColor.dark,
+  //     'normal': SystemTheme.accentColor.accent,
+  //     'light': SystemTheme.accentColor.light,
+  //     'lighter': SystemTheme.accentColor.lighter,
+  //     'lightest': SystemTheme.accentColor.lightest,
+  //   });
+  // }
   return Colors.purple;
 }
